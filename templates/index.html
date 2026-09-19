@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Resume Analyzer & Career System</h1>
+            <p>Developed by Farhath</p>
+        </header>
+
+        <main>
+            <div class="card form-section">
+                <form id="analyze-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required placeholder="John Doe">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="john@example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="role">Target Role</label>
+                        <select id="role" name="role" required>
+                            {% for role in roles %}
+                            <option value="{{ role }}">{{ role }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pdf">Resume PDF</label>
+                        <input type="file" id="pdf" name="pdf" accept=".pdf" required>
+                    </div>
+
+                    <button type="submit" id="analyze-btn" class="btn primary-btn">Analyze Resume</button>
+                </form>
+                <div id="loading" class="hidden">
+                    <p>Analyzing resume, please wait...</p>
+                </div>
+            </div>
+
+            <div id="results-section" class="card hidden">
+                <h2>Analysis Results</h2>
+                
+                <div class="score-container">
+                    <div class="score-circle">
+                        <span id="score-text">0%</span>
+                    </div>
+                    <h3 id="status-text">Good</h3>
+                </div>
+
+                <div class="results-grid">
+                    <div class="result-box">
+                        <h3>Matched Skills (<span id="matched-count">0</span>)</h3>
+                        <ul id="matched-skills" class="skill-list matched"></ul>
+                    </div>
+                    <div class="result-box">
+                        <h3>Missing Skills (<span id="missing-count">0</span>)</h3>
+                        <ul id="missing-skills" class="skill-list missing"></ul>
+                    </div>
+                </div>
+
+                <div class="results-grid">
+                    <div class="result-box">
+                        <h3>Learning Roadmap</h3>
+                        <ul id="learning-roadmap" class="item-list"></ul>
+                    </div>
+                    <div class="result-box">
+                        <h3>Job Recommendations</h3>
+                        <ul id="job-recs" class="item-list"></ul>
+                    </div>
+                </div>
+
+                <button id="download-btn" class="btn secondary-btn">Download PDF Report</button>
+            </div>
+        </main>
+    </div>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
